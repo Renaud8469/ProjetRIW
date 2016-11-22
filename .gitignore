@@ -1,3 +1,5 @@
 # PyCharm files #
 .idea
 
+# Data files #
+CS276/pa1-data/*

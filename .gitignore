@@ -2,7 +2,7 @@
 .idea
 
 # Temporary files
-.pyc
+*.pyc
 
 # Data files #
 CS276/pa1-data/

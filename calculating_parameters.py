@@ -24,7 +24,7 @@ print("Pour CACM, Estimation de la taille du vocabulaire pour une collection d'u
 # Number of tokens and vocabulary size in CS76
 t_cs76 = 23912191
 m_cs76 = 244580
-# number of tokens and vocabulary size in CS76
+# number of tokens and vocabulary size in half of CS76
 t_prime_cs76 = 13611296
 m_prime_cs76 = 150733
 
@@ -33,4 +33,9 @@ k_cs76 = get_k(t_cs76, m_cs76, b_cs76)
 
 print("Pour CS76, valeur de b : " + str(b_cs76))
 print("Pour CS76, valeur de k : " + str(k_cs76))
+
+# Estimating vocabulary size for a CS76-collection with one million tokens
+m_second_cs76 = k_cs76*(1000000**b_cs76)
+
+print("Pour CS76, Estimation de la taille du vocabulaire pour une collection d'un million de tokens : " + str(int(m_second_cs76)))
 

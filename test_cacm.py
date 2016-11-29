@@ -1,6 +1,6 @@
 import nltk
 from get_token_list import *
-from common_words_comp import *
+from useful_functions import *
 
 cacm = open('CACM/cacm.all', 'r')
 

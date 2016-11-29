@@ -1,7 +1,10 @@
 import nltk
+from useful_functions import custom_tokenize
+
 
 def get_id(x):
     return int(''.join(ele for ele in x if ele.isdigit()))
+
 
 def get_token_list(file):
     token_list = []
@@ -13,7 +16,7 @@ def get_token_list(file):
             latest_mark = line
         if (".T" in latest_mark) or (".W" in latest_mark) or (".K" in latest_mark):
             if len(line) > 3:
-                current_tokens = nltk.word_tokenize(line)
+                current_tokens = custom_tokenize(line)
                 token_list = token_list + current_tokens
     return token_list
 

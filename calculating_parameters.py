@@ -1,4 +1,5 @@
 from math import *
+from useful_functions import *
 
 #Number of tokens in CACM
 T = 189832
@@ -9,8 +10,8 @@ M = 8997
 #Vocabulary size for half-CACM
 M_prime = 5041
 
-b = log(M_prime/M)/log(T_prime/T)
-k = M/(T**b)
+b = get_b(T, T_prime, M, M_prime)
+k = get_k(T, M, b)
 
 print("Valeur de b : " + str(b))
 print("Valeur de k : " + str(k))

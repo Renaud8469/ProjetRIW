@@ -30,9 +30,9 @@ def get_token_list_half(file):
             latest_mark = line
         if (".T" in latest_mark) or (".W" in latest_mark) or (".K" in latest_mark):
             if len(line) > 3:
-                current_tokens = nltk.word_tokenize(line)
+                current_tokens = custom_tokenize(line)
                 token_list = token_list + current_tokens
-        if id_paper > 1602:
+        if id_paper >= 1602:
             print(id_paper)
             break
     return token_list

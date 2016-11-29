@@ -1,13 +1,13 @@
 from math import *
 
 #Number of tokens in CACM
-T = 217847
+T = 189832
 #Number of tokens in half-CACM
-T_prime = 60272
+T_prime = 53947
 #Vocabulary size for CACM
-M = 11654
+M = 8997
 #Vocabulary size for half-CACM
-M_prime = 6078
+M_prime = 5041
 
 b = log(M_prime/M)/log(T_prime/T)
 k = M/(T**b)

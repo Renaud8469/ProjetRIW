@@ -4,5 +4,8 @@
 # Temporary files
 *.pyc
 
+# cache
+__pycache__
+
 # Data files #
 CS276/pa1-data/

@@ -30,6 +30,7 @@ def count_tokens_and_vocabulary():
         token_count = result['count']
     print("This collection has " + str(token_count) + " tokens.")
     print("Its vocabulary is made of " + str(len(vocabulary)) + " words.")
+    return vocabulary
 
 count_tokens_and_vocabulary()
 

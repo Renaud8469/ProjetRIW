@@ -12,6 +12,8 @@ def count_tokens_and_vocabulary_in_dir(i, vocabulary, token_count):
         for word in lower_and_remove_common(tokens):
             if not vocabulary.get(word):
                 vocabulary[word] = 1
+            else:
+                vocabulary[word] += 1
     return {'voc': vocabulary, 'count': token_count}
 
 

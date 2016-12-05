@@ -29,3 +29,11 @@ def get_b(T, T_prime, M, M_prime):
 def get_k(T, M, b):
     k = M/(T**b)
     return k
+
+
+def freq(tuple_word_freq):
+    return tuple_word_freq[1]
+
+
+def rank(tuple_word_freq_rank):
+    return tuple_word_freq_rank[1][1]

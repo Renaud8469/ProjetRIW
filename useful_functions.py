@@ -31,7 +31,7 @@ def get_k(T, M, b):
     return k
 
 
-def freq(tuple_word_freq):
+def second(tuple_word_freq):
     return tuple_word_freq[1]
 
 

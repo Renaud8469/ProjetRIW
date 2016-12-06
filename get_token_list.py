@@ -38,7 +38,8 @@ def get_token_list_half(file):
     return token_list
 
 #Optimized function
-def get_token_number(file):
+def get_vocabulary_dict(file):
+    token_dict = {}
     token_number = 0
     latest_mark = ""
     for line in file:
@@ -48,20 +49,15 @@ def get_token_number(file):
             latest_mark = line
         if (".T" in latest_mark) or (".W" in latest_mark) or (".K" in latest_mark):
             if len(line) > 3:
-                current_tokens = custom_tokenize(line)
-                token_number = token_number + len(current_tokens)
-    return token_number
+                total_tokens = custom_tokenize(line)
+                current_tokens = lower_and_remove_common(custom_tokenize(line))
+                token_number = token_number + len(total_tokens)
+                for token in current_tokens:
+                    word = token
+                    if word in token_dict:
+                        token_dict[word] = token_dict[word] + 1
+                    else:
+                        token_dict[word] = 1
+    return token_dict, token_number
 
-def get_frequency_list(file):
-    token_list_pre = get_token_list(file)
-    token_list = lower_and_remove_common(token_list_pre)
-    size = len(token_list)
-    frequency_list = {}
-    for token in token_list:
-        word = token
-        if word in frequency_list:
-            frequency_list[word] = frequency_list[word] + 1/size
-        else:
-            frequency_list[word] = 1/size
-    return frequency_list
 

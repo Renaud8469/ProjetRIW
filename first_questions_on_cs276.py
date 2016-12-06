@@ -61,7 +61,7 @@ def show_plot_freq_rank(voc_freq_rank):
     plt.plot(array_rank, array_freq)
     plt.xlabel('Word rank')
     plt.ylabel('Word frequency')
-    #plt.axis([0, 250000, 0, 365000])
+    # plt.axis([0, 250000, 0, 365000])
     plt.show()
 
 
@@ -90,8 +90,8 @@ def main():
 
     voc_freq_rank_cs76 = get_voc_freq_rank(vocabulary_cs76)
 
-    show_plot_freq_rank(voc_freq_rank_cs76)
-    show_plot_log_freq_rank(voc_freq_rank_cs76)
+    # show_plot_freq_rank(voc_freq_rank_cs76)
+    # show_plot_log_freq_rank(voc_freq_rank_cs76)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import nltk
 from get_token_list import *
-from treatmentOfCS276 import *
+from treatment_of_cs276 import *
 
 cacm = open('CACM/cacm.all', 'r')
 

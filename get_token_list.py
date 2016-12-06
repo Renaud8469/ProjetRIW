@@ -55,9 +55,31 @@ def get_vocabulary_dict(file):
                 for token in current_tokens:
                     word = token
                     if word in token_dict:
-                        token_dict[word] = token_dict[word] + 1
+                        token_dict[word] += 1
                     else:
                         token_dict[word] = 1
     return token_dict, token_number
 
+def get_reverse_index(vocabulary, file):
+    reverse_index = {}
+    for key in vocabulary.keys():
+        reverse_index[key] = {}
+    file.seek(0)
+    latest_mark = ""
+    for line in file:
+        if ".I " in line:
+            id_paper = get_id(line)
+        if (".I " in line) or (".T" in line) or (".W" in line) or (".B" in line) or (".A" in line) or (
+            ".N" in line) or (".X" in line) or (".K" in line):
+            latest_mark = line
+        if (".T" in latest_mark) or (".W" in latest_mark) or (".K" in latest_mark):
+            if len(line) > 3:
+                current_tokens = lower_and_remove_common(custom_tokenize(line))
+                for token in current_tokens:
+                    print(token)
+                    if id_paper in reverse_index[token].keys():
+                        reverse_index[token][id_paper] += 1
+                    else:
+                        reverse_index[token][id_paper] = 1
+    return reverse_index
 

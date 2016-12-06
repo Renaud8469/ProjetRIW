@@ -1,9 +1,9 @@
-import os
-from useful_functions import *
-
 """
     This file gathers functions used to create an index on CS276 collection.
 """
+
+import os
+from useful_functions import *
 
 
 # This function creates 2 dictionaries to bind documents and documentIDs.
@@ -49,8 +49,8 @@ def make_dictionary(directory):
 
 def main():
     global_directory = "CS276/pa1-data/"
-    # doc_to_doc_id = make_doc_id(global_directory)
     doc_id_dict, dictionary = make_dictionary(global_directory)
+    print(list(dictionary.items())[:5])
 
 
 if __name__ == '__main__':

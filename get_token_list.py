@@ -76,10 +76,19 @@ def get_reverse_index(vocabulary, file):
             if len(line) > 3:
                 current_tokens = lower_and_remove_common(custom_tokenize(line))
                 for token in current_tokens:
-                    print(token)
                     if id_paper in reverse_index[token].keys():
                         reverse_index[token][id_paper] += 1
                     else:
                         reverse_index[token][id_paper] = 1
     return reverse_index
 
+def boolean_search(index, query):
+    query_list = query.replace("(", "").replace(")", "").split()
+    preresults = {}
+    for item in query_list:
+        if item not in ["AND", "OR", "NOT"]:
+            if item in index.keys():
+                preresults[item] = index[item].keys()
+                for doc in index[item].keys():
+    print(preresults)
+    return query_list

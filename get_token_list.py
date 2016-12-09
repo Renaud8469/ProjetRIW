@@ -89,13 +89,13 @@ def split_query(str):
 
 def individual_results(index, query):
     query_list = split_query(query)
-    preresults = {} #dictionary containing results for each individual term different from AND, OR, NOT
+    preresults = {} #Dictionary containing results for each individual term different from AND, OR, NOT
     for item in query_list:
         if item not in ["AND", "OR", "NOT"]:
             if item in index.keys():
                 preresults[item] = index[item].keys()
             else:
-                preresults[item] = []
+                preresults[item] = [] #If the word is not in index, we state that no document are relevant for it
     return preresults
 
 
@@ -150,44 +150,49 @@ def boolean_search(index, query):
     #We want to treat expressions according to the priority indicated by parentheses
     s = parentheses_priority(query)
     temp = split_query(s)
-    while len(temp)>1:
-        #What we want to do:
-        #Evaluate the expression the most surrounded with parentheses
-        #Replace this expression by a single 'term' and evaluate the new expression composed of the new 'term'
-        #and the term next to it if there is one; do it until there is only one term
-        #Remove parentheses surrounding this term
-        #Look for expression and repeat the process until there is only one 'term'
 
-        #We build a single expression
-        l = []
-        i = 0
-        while not is_single_exp(l):
-            l = l + [temp[i]]
-            i += 1
-            if i > len(temp):
-                print("Erreur dans la formation d'expressions unitaires")
-                break
+    while 1:
 
-        #We evaluate the single expression and get temporary results
-        temporary_results = evaluate_single_expression(preresults, l, index)
+        s = parentheses_priority(query)
 
-        #We now replace the original expression in preresults (which is a dictionary) with a new single key
-        #so we can then work on new terms next to original expression
-        new = l[0]
-        for i in (1, len(l)-1):
-            if i > 0:
-                new = new + " " + l[i] #constructing string linked to the expression
-        preresults[new] = temporary_results #adding said string
-        for item in l:
-            if item not in ["AND", "OR", "NOT"]:
-                preresults = remove_key(preresults, item) #removing old keys
+        #We handle an expression WITHOUT parentheses
+        #------------------------------
+        while len(temp)>1:
 
-        #We do the same to the temp list to take into account the evaluation we did in the next loop
-        for item in l:
-            if item not in ["AND", "OR", "NOT"]:
-                temp = remove_in_list(temp, [item])
-        temp = [new] + temp
-        temp = remove_duplicates(temp)
+            #We build a single expression
+            l = []
+            i = 0
+            while not is_single_exp(l):
+                l = l + [temp[i]]
+                i += 1
+                if i > len(temp):
+                    print("Erreur dans la formation d'expressions unitaires")
+                    break
+
+            #We evaluate the single expression and get temporary results
+            temporary_results = evaluate_single_expression(preresults, l, index)
+
+            #We now replace the original expression in preresults (which is a dictionary) with a new single key
+            #so we can then work on new terms next to original expression
+            new = l[0]
+            for i in (1, len(l)-1):
+                if i > 0:
+                    new = new + " " + l[i] #constructing string linked to the expression
+            preresults[new] = temporary_results #adding said string
+            for item in l:
+                if item not in ["AND", "OR", "NOT"]:
+                    preresults = remove_key(preresults, item) #removing old keys
+
+            #We do the same to the temp list to take into account the evaluation we did in the next loop
+            for item in l:
+                if item not in ["AND", "OR", "NOT"]:
+                    temp = remove_in_list(temp, [item])
+            temp = [new] + temp
+            temp = remove_duplicates(temp)
+        #--------------------------------------
+
+        if s == query:
+            break #Implementation of "else" still needed
 
     final_results = list(set(temporary_results))
 

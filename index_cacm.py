@@ -16,4 +16,4 @@ reverse_index = get_reverse_index(vocabulary, cacm)
 #e = evaluate_single_expression(preresults, s, reverse_index)
 #print(e)
 
-boolean_search(reverse_index, "harvard OR nonono")
+boolean_search(reverse_index, "(harvard OR paris) AND ")

@@ -129,8 +129,43 @@ def evaluate_single_expression(preresults, single_expr, index):
                 results = unite(a, temp)
             elif item == "NOT" and (single_expr.index(item) == 0 or previous_word not in ["AND", "OR"]):
                 results = remove_in_list(all_docs, b)
-
     return results
+
+def evaluate_multiple_expressions(preresults, expr, index):
+    while len(expr) > 1:
+
+        # We build a single expression
+        l = []
+        i = 0
+        while not is_single_exp(l):
+            l = l + [expr[i]]
+            i += 1
+            if i > len(expr):
+                print("Erreur dans la formation d'expressions unitaires")
+                break
+
+        # We evaluate the single expression and get temporary results
+        temporary_results = evaluate_single_expression(preresults, l, index)
+
+        # We now replace the original expression in preresults (which is a dictionary) with a new single key
+        # so we can then work on new terms next to original expression
+        new = l[0]
+        for i in (1, len(l) - 1):
+            if i > 0:
+                new = new + " " + l[i]  # constructing string linked to the expression
+        preresults[new] = temporary_results  # adding said string
+        for item in l:
+            if item not in ["AND", "OR", "NOT"]:
+                preresults = remove_key(preresults, item)  # removing old keys
+
+        # We do the same to the multiple expression list to take into account the evaluation we did in the next loop
+        for item in l:
+            if item not in ["AND", "OR", "NOT"]:
+                expr = remove_in_list(expr, [item])
+        expr = [new] + expr
+        expr = remove_duplicates(expr)
+
+    return temporary_results
 
 
 def parentheses_priority(str):
@@ -144,9 +179,8 @@ def parentheses_priority(str):
 
 
 def boolean_search(index, query):
-    final_results = []
-    query_list = split_query(query)
     preresults = individual_results(index, query)
+    
     #We want to treat expressions according to the priority indicated by parentheses
     s = parentheses_priority(query)
     temp = split_query(s)
@@ -156,40 +190,7 @@ def boolean_search(index, query):
         s = parentheses_priority(query)
 
         #We handle an expression WITHOUT parentheses
-        #------------------------------
-        while len(temp)>1:
-
-            #We build a single expression
-            l = []
-            i = 0
-            while not is_single_exp(l):
-                l = l + [temp[i]]
-                i += 1
-                if i > len(temp):
-                    print("Erreur dans la formation d'expressions unitaires")
-                    break
-
-            #We evaluate the single expression and get temporary results
-            temporary_results = evaluate_single_expression(preresults, l, index)
-
-            #We now replace the original expression in preresults (which is a dictionary) with a new single key
-            #so we can then work on new terms next to original expression
-            new = l[0]
-            for i in (1, len(l)-1):
-                if i > 0:
-                    new = new + " " + l[i] #constructing string linked to the expression
-            preresults[new] = temporary_results #adding said string
-            for item in l:
-                if item not in ["AND", "OR", "NOT"]:
-                    preresults = remove_key(preresults, item) #removing old keys
-
-            #We do the same to the temp list to take into account the evaluation we did in the next loop
-            for item in l:
-                if item not in ["AND", "OR", "NOT"]:
-                    temp = remove_in_list(temp, [item])
-            temp = [new] + temp
-            temp = remove_duplicates(temp)
-        #--------------------------------------
+        temporary_results = evaluate_multiple_expressions(preresults, temp, index)
 
         if s == query:
             break #Implementation of "else" still needed

@@ -93,7 +93,6 @@ def remove_duplicates(l):
     for i in range(0, len(l)-2):
         if (l[i] in seq) and (l[i+1] in seq):
             del l[i]
-            print("duplicat trouvé")
     if l[len(l)-1] in seq:
         del l[len(l)-1]
     return l

@@ -94,6 +94,8 @@ def individual_results(index, query):
         if item not in ["AND", "OR", "NOT"]:
             if item in index.keys():
                 preresults[item] = index[item].keys()
+            else:
+                preresults[item] = []
     return preresults
 
 
@@ -187,6 +189,12 @@ def boolean_search(index, query):
         temp = [new] + temp
         temp = remove_duplicates(temp)
 
-    final_results = temporary_results
+    final_results = list(set(temporary_results))
+
+    print(str(len(final_results)) + " publications correspondent à votre recherche : ")
+    k = 1
+    for i in final_results:
+        print("\t" + str(k) + "\t Publication n°" + str(i))
+        k += 1
     return final_results
 

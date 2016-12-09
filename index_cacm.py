@@ -6,7 +6,7 @@ vocabulary = get_vocabulary_dict(cacm)[0]
 reverse_index = get_reverse_index(vocabulary, cacm)
 
 #print(reverse_index)
-print(len(reverse_index))
+#print(len(reverse_index))
 
 #preresults = individual_results(reverse_index, "harvard AND program")
 #print(preresults)
@@ -16,4 +16,4 @@ print(len(reverse_index))
 #e = evaluate_single_expression(preresults, s, reverse_index)
 #print(e)
 
-print(boolean_search(reverse_index, "harvard OR prospects"))
+boolean_search(reverse_index, "harvard OR nonono")

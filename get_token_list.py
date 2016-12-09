@@ -130,9 +130,20 @@ def parentheses_priority(str):
         return parentheses_priority(s)
 
 def boolean_search(index, query):
+    final_results = []
     query_list = split_query(query)
     preresults = individual_results(index, query)
     #We want to treat expressions according to the priority indicated by parentheses
+    s = parentheses_priority(query)
+    while 1:
+        #What we want to do:
+        #Evaluate the expression the most surrounded with parentheses
+        #Replace this expression by a single 'term' and evaluate the new expression composed of the new 'term'
+        #and the term next to it if there is one; do it until there is only one term
+        #Remove parentheses surrounding this term
+        #Look for expression and repeat the process until there is only one 'term'
+        if parentheses_priority(s) == s: #break condition does not seem efficient
+            break
     results = evaluate_single_expression(index, query_list)
     return results
 

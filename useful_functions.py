@@ -37,3 +37,26 @@ def second(tuple_word_freq):
 
 def rank(tuple_word_freq_rank):
     return tuple_word_freq_rank[1][1]
+
+def intersect(a, b):
+    return [val for val in a if val in b]
+
+def unite(a, b):
+    return list(set().union(a,b))
+
+def remove_in_list(a, b):
+    """a is the original list and b is the
+    list whose items you want to remove from a
+    if there are items in common"""
+    final_list = []
+    for item in a:
+        if item not in b:
+            final_list = final_list + [item]
+    return final_list
+
+def docs_in_index(index):
+    """Returns a list of all documents indexed"""
+    docs = []
+    for item in index:
+        docs = unite(docs, index[item].keys())
+    return docs

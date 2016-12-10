@@ -40,15 +40,18 @@ def rank(tuple_word_freq_rank):
 
 
 def intersect(a, b):
+    """Returns the list of a ∩ b"""
     return [val for val in a if val in b]
 
 
 def unite(a, b):
+    """Returns the list of a ∪ b"""
     return list(set().union(a,b))
 
 
 def remove_in_list(a, b):
-    """a is the original list and b is the
+    """Returns the list of a \ b
+    a is the original list and b is the
     list whose items you want to remove from a
     if there are items in common"""
     final_list = []
@@ -83,12 +86,16 @@ def is_single_exp(l):
 
 
 def remove_key(d, key):
+    """Properly removes key from dictionary following
+    immutability principle"""
     r = dict(d)
     del r[key]
     return r
 
 
 def remove_duplicates(l):
+    """Removes duplicates in case there are two boolean
+    operators AND or OR following each other"""
     seq = ["AND", "OR"]
     for i in range(0, len(l)-2):
         if (l[i] in seq) and (l[i+1] in seq):
@@ -96,3 +103,92 @@ def remove_duplicates(l):
     if l[len(l)-1] in seq:
         del l[len(l)-1]
     return l
+
+
+def split_query(str):
+    """Returns a list where each element is a word from the str argument
+    Parentheses are removed if there are some"""
+    return str.replace("(", "").replace(")", "").split()
+
+
+def split_query_with_p(str):
+    """Returns a list where each element is either a word or a block
+    surrounded by parentheses if there are some
+    e.g. input : 'harvard OR (program AND computer) OR (paris AND ECP)'
+    output : ['harvard', 'OR', 'program AND computer', 'OR', 'paris AND ECP']"""
+    s = str.split()
+    to_delete = 0
+    i = -1
+    l = []
+    for el in s:
+        if "(" in el:
+            to_delete += el.count("(")
+        elif ")" in el:
+            to_delete -= el.count(")")
+            i += el.count(")")
+            if to_delete == 0:
+                l = l + [parentheses_blocks(str)[i]]
+        elif to_delete == 0:
+            l = l + [el]
+    return l
+
+
+def parentheses_priority(query):
+    """Recursive function returning the string 'most surrounded'
+    by parentheses which will be treated first later
+    NB: this function is not used anymore in boolean_search.py"""
+    if ("(" not in query) and (")" not in query):
+        return query
+    else:
+        s = query[query.find("(") + 1:query.rfind(")")]
+        return parentheses_priority(s)
+
+
+def trimming(query):
+    """Gets rid of what is outside of the 'largest' parentheses block
+    e.g. input : 'harvard AND (computer OR (program AND software))'
+    output : 'computer OR (program AND software)'
+    NB: if there are several blocks at the same level, the first one is returned"""
+    if "(" not in query:
+        return query
+    else:
+        i = 0
+        while query[i] != "(":
+            i += 1
+        first_pos = i+1
+        i += 1
+        j = 0
+        k = i
+        for c in query[i:]:
+            k += 1
+            if c == "(":
+                j += 1
+            elif c == ")":
+                j -= 1
+                if j == -1:
+                    last_pos = k-1
+                    break
+        return query[first_pos:last_pos], last_pos
+
+
+def parentheses_blocks(query):
+    """Function identifying the different blocks surrounded by parentheses
+    to have a proper order of priority. We go from the blocks the most inside
+    and work our way to the 'largest' block"""
+    blocks = []
+    s = query
+    n = 0
+    if query[0] != "(":
+        blocks = blocks + [query]
+    for c in query:
+        if c == "(":
+            n += 1
+    for i in range(n):
+        new = trimming(s)[0]
+        last_pos_new = trimming(s)[1]
+        blocks = blocks + [new]
+        if trimming(new) == new:
+            s = s[last_pos_new+1:]
+        else:
+            s = new
+    return list(reversed(blocks))

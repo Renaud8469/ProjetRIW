@@ -51,7 +51,7 @@ def get_vocabulary_dict(file):
             if len(line) > 3:
                 total_tokens = custom_tokenize(line)
                 current_tokens = lower_and_remove_common(custom_tokenize(line))
-                token_number =+ len(total_tokens)
+                token_number += len(total_tokens)
                 for token in current_tokens:
                     word = token
                     if word in token_dict:

@@ -87,6 +87,24 @@ def split_query(str):
     return str.replace("(", "").replace(")", "").split()
 
 
+def split_query_with_p(str):
+    s = str.split()
+    to_delete = 0
+    i = -1
+    l = []
+    for el in s:
+        if "(" in el:
+            to_delete += el.count("(")
+        elif ")" in el:
+            to_delete -= el.count(")")
+            i += el.count(")")
+            if to_delete == 0:
+                l = l + [parentheses_blocks(str)[i]]
+        elif to_delete == 0:
+            l = l + [el]
+    return l
+
+
 def individual_results(index, query):
     query_list = split_query(query)
     preresults = {} #Dictionary containing results for each individual term different from AND, OR, NOT
@@ -214,17 +232,13 @@ def parentheses_blocks(query):
             n += 1
     for i in range(n):
         new = trimming(s)[0]
-        print(new)
         last_pos_new = trimming(s)[1]
         blocks = blocks + [new]
         if trimming(new) == new:
             s = s[last_pos_new+1:]
         else:
             s = new
-        print(trimming(new))
-        print("fin de boucle")
-        print(s)
-    return blocks
+    return list(reversed(blocks))
 
 print(parentheses_blocks("(Salut OR (bonjour AND hello) OR (Guten AND Tag))"))
 
@@ -233,18 +247,15 @@ def boolean_search(index, query):
     preresults = individual_results(index, query)
 
     #We want to treat expressions according to the priority indicated by parentheses
-    s = parentheses_priority(query)
-    temp = split_query(s)
-
-    while 1:
-
-        s = parentheses_priority(query)
-
-        #We handle an expression WITHOUT parentheses
-        temporary_results = evaluate_multiple_expressions(preresults, temp, index)
-
-        if s == query:
-            break #Implementation of "else" still needed
+    blocks = parentheses_blocks(query)
+    for expr in blocks:
+        if "(" not in expr:
+            temp = split_query(expr)
+            temporary_results = evaluate_multiple_expressions(preresults, temp, index)
+            preresults[expr] = temporary_results
+        else:
+            temp = split_query_with_p(expr)
+            temporary_results = evaluate_multiple_expressions(preresults,temp, index)
 
     final_results = list(set(temporary_results))
 

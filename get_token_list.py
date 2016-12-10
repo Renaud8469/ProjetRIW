@@ -168,19 +168,70 @@ def evaluate_multiple_expressions(preresults, expr, index):
     return temporary_results
 
 
-def parentheses_priority(str):
-    """recursive function returning the string 'most surrounded'
+def parentheses_priority(query):
+    """Recursive function returning the string 'most surrounded'
     by parentheses which will be treated first later"""
-    if ("(" not in str) and (")" not in str):
-        return str
+    if ("(" not in query) and (")" not in query):
+        return query
     else:
-        s = str[str.find("(") + 1:str.rfind(")")]
+        s = query[query.find("(") + 1:query.rfind(")")]
         return parentheses_priority(s)
+
+
+def trimming(query):
+    if "(" not in query:
+        return query
+    else:
+        i = 0
+        while query[i] != "(":
+            i += 1
+        first_pos = i+1
+        i += 1
+        j = 0
+        k = i
+        for c in query[i:]:
+            k += 1
+            if c == "(":
+                j += 1
+            elif c == ")":
+                j -= 1
+                if j == -1:
+                    last_pos = k-1
+                    break
+        return query[first_pos:last_pos], last_pos
+
+
+def parentheses_blocks(query):
+    """Function identifying the different blocks surrounded by parentheses
+    to have a proper order of priority"""
+    blocks = []
+    s = query
+    n = 0
+    if query[0] != "(":
+        blocks = blocks + [query]
+    for c in query:
+        if c == "(":
+            n += 1
+    for i in range(n):
+        new = trimming(s)[0]
+        print(new)
+        last_pos_new = trimming(s)[1]
+        blocks = blocks + [new]
+        if trimming(new) == new:
+            s = s[last_pos_new+1:]
+        else:
+            s = new
+        print(trimming(new))
+        print("fin de boucle")
+        print(s)
+    return blocks
+
+print(parentheses_blocks("(Salut OR (bonjour AND hello) OR (Guten AND Tag))"))
 
 
 def boolean_search(index, query):
     preresults = individual_results(index, query)
-    
+
     #We want to treat expressions according to the priority indicated by parentheses
     s = parentheses_priority(query)
     temp = split_query(s)

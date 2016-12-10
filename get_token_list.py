@@ -51,7 +51,7 @@ def get_vocabulary_dict(file):
             if len(line) > 3:
                 total_tokens = custom_tokenize(line)
                 current_tokens = lower_and_remove_common(custom_tokenize(line))
-                token_number = token_number + len(total_tokens)
+                token_number += len(total_tokens)
                 for token in current_tokens:
                     word = token
                     if word in token_dict:
@@ -76,10 +76,8 @@ def get_reverse_index(vocabulary, file):
             if len(line) > 3:
                 current_tokens = lower_and_remove_common(custom_tokenize(line))
                 for token in current_tokens:
-                    print(token)
                     if id_paper in reverse_index[token].keys():
                         reverse_index[token][id_paper] += 1
                     else:
                         reverse_index[token][id_paper] = 1
     return reverse_index
-

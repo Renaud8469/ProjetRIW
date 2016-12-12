@@ -62,6 +62,8 @@ def evaluate_single_expression(preresults, single_expr, index):
 
 def evaluate_multiple_expressions(preresults, expr, index):
     """Returns the results for an expression with more than two terms using the previous function"""
+    if len(expr) == 1:
+        temporary_results = preresults[expr[0]]
     while len(expr) > 1:
 
         # We build a single expression

@@ -81,21 +81,28 @@ def evaluate_multiple_expressions(preresults, expr, index):
 
         # We now replace the original expression in preresults (which is a dictionary) with a new single key
         # so we can then work on new terms next to original expression
-        new = l[0]
-        for i in (1, len(l) - 1):
-            if i > 0:
-                new = new + " " + l[i]  # constructing string linked to the expression
+        new = []
+        for el in l:
+            if el == l[0]:
+                new = el
+            else:
+                new = new + " " + el  # constructing string linked to the expression
+        print(new)
         preresults[new] = temporary_results  # adding said string
         for item in l:
             if item not in ["AND", "OR", "NOT"]:
                 preresults = remove_key(preresults, item)  # removing old keys
 
         # We do the same to the multiple expression list to take into account the evaluation we did in the next loop
+        print(expr)
         for item in l:
-            if item not in ["AND", "OR", "NOT"]:
+            if item not in ["AND", "OR"]:
+                expr = remove_in_list(expr, [item])
+            if item == "NOT":
                 expr = remove_in_list(expr, [item])
         expr = [new] + expr
         expr = remove_duplicates(expr)
+        print(expr)
 
     return temporary_results
 

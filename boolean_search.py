@@ -94,7 +94,6 @@ def evaluate_multiple_expressions(preresults, expr, index):
                 preresults = remove_key(preresults, item)  # removing old keys
 
         # We do the same to the multiple expression list to take into account the evaluation we did in the next loop
-        print(expr)
         for item in l:
             if item not in ["AND", "OR"]:
                 expr = remove_in_list(expr, [item])
@@ -102,7 +101,6 @@ def evaluate_multiple_expressions(preresults, expr, index):
                 expr = remove_in_list(expr, [item])
         expr = [new] + expr
         expr = remove_duplicates(expr)
-        print(expr)
 
     return temporary_results
 

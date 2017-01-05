@@ -19,6 +19,7 @@ Your query must then comply with a few rules:
 - Be careful to avoid mistakes while typing keywords since there is no correction on them. Uppercase or lowercase is equivalent
 
 Here are a few request that won't work and how you should correct them:
+
 Don't | Why | Do
 --- | --- | ---
 harvard AND NOT computer | Parenthesis are required | harvard AND (NOT computer)

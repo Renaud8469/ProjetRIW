@@ -76,7 +76,7 @@ def is_single_exp(l):
         if l[0] == "NOT":
             return True
     elif len(l) == 3:
-        if l[1] in ["AND", "OR"]:
+        if l[1] in ["AND", "OR"] and l[2] != "NOT":
             return True
     elif len(l) == 4:
         if l[1] in ["AND", "OR"] and l[2] == "NOT":

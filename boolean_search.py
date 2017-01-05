@@ -87,7 +87,6 @@ def evaluate_multiple_expressions(preresults, expr, index):
                 new = el
             else:
                 new = new + " " + el  # constructing string linked to the expression
-        print(new)
         preresults[new] = temporary_results  # adding said string
         for item in l:
             if item not in ["AND", "OR", "NOT"]:

@@ -16,11 +16,15 @@ print(str(len(docs_in_index(reverse_index))) + " documents ont été indexés")
 print(str(len(reverse_index)) + " termes dans l'index inversé \n")
 print("Index construit en %s seconde(s)\n" % round(index_time-start_time, 4))
 
-query = input("Entrez votre requête en utilisant les mots-clés, AND, OR, NOT et des parenthèses : ")
+while 1:
+    query = input("Entrez votre requête en utilisant les mots-clés, AND, OR, NOT et des parenthèses : ")
+    if query == "":
+        print("Aucune requête n'a été faite, processus abandonné")
+        break
 
-print("Recherche en cours... \n")
+    print("Recherche en cours... \n")
 
-search_time = time.time()
-boolean_search(reverse_index, query)
-finish_time = time.time()
-print("Recherche effectuée en %s seconde(s)" % round(finish_time-search_time, 4))
+    search_time = time.time()
+    boolean_search(reverse_index, query)
+    finish_time = time.time()
+    print("Recherche effectuée en %s seconde(s) \n" % round(finish_time-search_time, 4))

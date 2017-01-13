@@ -17,6 +17,7 @@ Your query must then comply with a few rules:
     - NOT may either be used at the beginning of a query (eg NOT computer) or later on by using parenthesis (eg harvard AND (NOT computer))
 - You may use parenthesis in your query. Use it to avoid flawed queries that make no logical sense (see the table below)
 - Be careful to avoid mistakes while typing keywords since there is no correction on them. Uppercase or lowercase is equivalent
+- Avoid redundant paranthesis, they may cause abnormal results
 
 Here are a few request that won't work and how you should correct them:
 
@@ -24,5 +25,6 @@ Don't | Why | Do
 --- | --- | ---
 harvard AND NOT computer | Parenthesis are required | harvard AND (NOT computer)
 harvard AND computer OR program | Ambiguous / makes no logical sense | harvard AND (computer OR program) (depending on what you mean)
-physics OR (havard AND (computer) OR program) | Parenthesis are no placed properly | physics OR (harvard AND (computer OR program))
-physics OR (havard AND (computer OR program) | Missing parenthesis | physics OR (harvard AND (computer OR program))
+physics OR (harvard AND (computer) OR program) | Parenthesis are no placed properly | physics OR (harvard AND (computer OR program))
+physics OR (harvard AND (computer OR program) | Missing parenthesis | physics OR (harvard AND (computer OR program))
+(physics OR (harvard AND computer)) | Redundant parenthesis | physics OR (harvard AND computer)

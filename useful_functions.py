@@ -191,4 +191,7 @@ def parentheses_blocks(query):
             s = s[last_pos_new+1:]
         else:
             s = new
-    return list(reversed(blocks))
+    list_final = list(reversed(blocks))
+    if blocks[0] != query:
+        list_final = list_final + [query]
+    return list_final

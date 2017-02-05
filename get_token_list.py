@@ -20,6 +20,7 @@ def get_token_list(file):
                 token_list = token_list + current_tokens
     return token_list
 
+
 def get_token_list_half(file):
     token_list = []
     latest_mark = ""
@@ -36,6 +37,7 @@ def get_token_list_half(file):
             print(id_paper)
             break
     return token_list
+
 
 #Optimized function
 def get_vocabulary_dict(file):
@@ -59,6 +61,7 @@ def get_vocabulary_dict(file):
                     else:
                         token_dict[word] = 1
     return token_dict, token_number
+
 
 def get_reverse_index(vocabulary, file):
     reverse_index = {}

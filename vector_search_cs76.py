@@ -1,13 +1,13 @@
 from collection import Collection
-from indexation_of_cacm import *
+from indexation_of_cs276 import *
+from first_questions_on_cs276 import count_tokens_and_vocabulary
 import time
 
 
-cacm = open('CACM/cacm.all', 'r')
-vocabulary = get_vocabulary_dict(cacm)[0]
-index = get_reverse_index(vocabulary, cacm)
+vocabulary = count_tokens_and_vocabulary()
+index = make_dictionary("CS276/pa1-data/")[1]
 
-cacm_collection = Collection(vocabulary, index)
+cs76_collection = Collection(vocabulary, index)
 
 while 1:
     query = input("Entrez votre requête en utilisant les mots-clés séparés par une virgule : ")
@@ -18,7 +18,7 @@ while 1:
     print("Recherche en cours... \n")
 
     search_time = time.time()
-    results = cacm_collection.vector_search(query)
+    results = cs76_collection.vector_search(query)
     finish_time = time.time()
 
     print(str(len(results)) + " publications correspondantes ont été trouvées: ")

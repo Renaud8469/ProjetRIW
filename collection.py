@@ -5,8 +5,7 @@ from math import log, sqrt
 
 class Collection:
 
-    def __init__(self, file, vocabulary, index):
-        self.file = file
+    def __init__(self, vocabulary, index):
         self.vocabulary = vocabulary
         self.index = index
 

@@ -120,10 +120,4 @@ def boolean_search(index, query):
             temporary_results = evaluate_multiple_expressions(preresults,temp, index)
 
     final_results = list(set(temporary_results))
-
-    print(str(len(final_results)) + " publications correspondantes ont été trouvées : ")
-    k = 1
-    for i in final_results:
-        print("\t" + str(k) + "\t Publication n°" + str(i))
-        k += 1
     return final_results

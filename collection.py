@@ -11,13 +11,13 @@ class Collection:
         self.index = index
 
     def boolean_search(self, query):
-        boolean_search(self.index, query)
+        return boolean_search(self.index, query)
 
     def vector_search(self, query):
         """Based on first course in RIW, slide 171"""
         docs = docs_in_index(self.index)
         s = {}
-        result = []
+        results = []
         for doc in docs:
             s[doc] = 0
         n_d = s
@@ -34,9 +34,9 @@ class Collection:
                     s[d] += w_d*w_q
         for doc in s:
             if s[doc] > 0:
-                result.append((doc, s[doc]/(sqrt(n_q)*sqrt(n_d[doc]))))
-        result.sort(key=lambda tup: tup[1], reverse=True)
-        return result
+                results.append((doc, s[doc]/(sqrt(n_q)*sqrt(n_d[doc]))))
+        results.sort(key=lambda tup: tup[1], reverse=True)
+        return results
 
     def get_log_tf(self, doc, word):
         if word in self.index.keys():

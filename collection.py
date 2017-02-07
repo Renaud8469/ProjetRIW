@@ -14,6 +14,7 @@ class Collection:
         boolean_search(self.index, query)
 
     def vector_search(self, query):
+        """Based on first course in RIW, slide 171"""
         docs = docs_in_index(self.index)
         s = {}
         result = []

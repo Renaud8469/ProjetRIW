@@ -16,13 +16,13 @@ def individual_results(index, query):
     """Returns documents relevant to each term of the query (except boolean operators) according
     to the index provided in arguments"""
     query_list = split_query(query)
-    preresults = {} #Dictionary containing results for each individual term different from AND, OR, NOT
+    preresults = {}  # Dictionary containing results for each individual term different from AND, OR, NOT
     for item in query_list:
         if item not in ["AND", "OR", "NOT"]:
             if item in index.keys():
                 preresults[item] = index[item].keys()
             else:
-                preresults[item] = [] #If the word is not in index, we state that no document are relevant for it
+                preresults[item] = []  # If the word is not in index, we state that no document are relevant for it
     return preresults
 
 
@@ -108,7 +108,7 @@ def boolean_search(index, query):
     """Returns the documents relevant to a query according to an index provided in argument"""
     preresults = individual_results(index, query)
 
-    #We want to treat expressions according to the priority indicated by parentheses
+    # We want to treat expressions according to the priority indicated by parentheses
     blocks = parentheses_blocks(query)
     for expr in blocks:
         if "(" not in expr:

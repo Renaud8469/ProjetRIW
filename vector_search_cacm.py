@@ -28,7 +28,7 @@ while 1:
         k += 1
         if k > 10:
             print("\n\t\tD'autres publications existent mais seuls les dix premiers résultats sont affichés")
-            print("\t\tIl y a %s publications jugés pertinentes" % len(results))
+            print("\t\tIl y a %s publications jugées pertinentes" % len(results))
             break
 
     print("\nRecherche effectuée en %s seconde(s) \n" % round(finish_time-search_time, 4))

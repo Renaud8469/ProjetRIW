@@ -5,9 +5,9 @@ import time
 
 
 vocabulary = count_tokens_and_vocabulary()
-index = make_dictionary("CS276/pa1-data/")[1]
+docs, index = make_dictionary("CS276/pa1-data/")
 
-cs276_collection = Collection(vocabulary, index)
+cs276_collection = Collection(list(docs.keys()), vocabulary, index)
 
 while 1:
     query = input("Entrez votre requête en utilisant les mots-clés, AND, OR, NOT et des parenthèses : ")

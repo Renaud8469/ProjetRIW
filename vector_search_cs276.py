@@ -7,7 +7,7 @@ import time
 vocabulary = count_tokens_and_vocabulary()
 index = make_dictionary("CS276/pa1-data/")[1]
 
-cs76_collection = Collection(vocabulary, index)
+cs276_collection = Collection(vocabulary, index)
 
 while 1:
     query = input("Entrez votre requête en utilisant les mots-clés séparés par une virgule : ")
@@ -18,7 +18,7 @@ while 1:
     print("Recherche en cours... \n")
 
     search_time = time.time()
-    results = cs76_collection.vector_search(query)
+    results = cs276_collection.vector_search(query)
     finish_time = time.time()
 
     print(str(len(results)) + " publications correspondantes ont été trouvées: ")
@@ -26,7 +26,7 @@ while 1:
     for i in results:
         print("\t" + str(k) + "\tPublication n°" + str(i[0]))
         k += 1
-        if k >= 10:
+        if k > 10:
             print("\n\t\tD'autres publications existent mais seuls les dix premiers résultats sont affichés")
             print("\t\tIl y a %s publications jugés pertinentes" % len(results))
             break

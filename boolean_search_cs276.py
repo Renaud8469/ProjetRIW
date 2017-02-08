@@ -7,7 +7,7 @@ import time
 vocabulary = count_tokens_and_vocabulary()
 index = make_dictionary("CS276/pa1-data/")[1]
 
-cs76_collection = Collection(vocabulary, index)
+cs276_collection = Collection(vocabulary, index)
 
 while 1:
     query = input("Entrez votre requête en utilisant les mots-clés, AND, OR, NOT et des parenthèses : ")
@@ -18,7 +18,7 @@ while 1:
     print("Recherche en cours... \n")
 
     search_time = time.time()
-    results = cs76_collection.boolean_search(query)
+    results = cs276_collection.boolean_search(query)
     finish_time = time.time()
 
     print(str(len(results)) + " publications correspondantes ont été trouvées : ")

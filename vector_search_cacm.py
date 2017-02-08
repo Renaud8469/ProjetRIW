@@ -26,7 +26,7 @@ while 1:
     for i in results:
         print("\t" + str(k) + "\tPublication n°" + str(i[0]))
         k += 1
-        if k >= 10:
+        if k > 10:
             print("\n\t\tD'autres publications existent mais seuls les dix premiers résultats sont affichés")
             print("\t\tIl y a %s publications jugés pertinentes" % len(results))
             break

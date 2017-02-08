@@ -15,7 +15,7 @@ class Collection:
 
     def vector_search(self, query):
         """Based on first course in RIW, slide 171"""
-        docs = docs_in_index(self.index)
+        docs = self.docs
         s = {}
         results = []
         for doc in docs:

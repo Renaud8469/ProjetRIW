@@ -5,9 +5,9 @@ import time
 
 cacm = open('CACM/cacm.all', 'r')
 vocabulary = get_vocabulary_dict(cacm)[0]
-index = get_reverse_index(vocabulary, cacm)
+index, docs = get_reverse_index(vocabulary, cacm)
 
-cacm_collection = Collection(vocabulary, index)
+cacm_collection = Collection(docs, vocabulary, index)
 
 while 1:
     query = input("Entrez votre requête en utilisant les mots-clés séparés par une virgule : ")

@@ -8,7 +8,7 @@ This project uses Python 3.5.2 with the NLTK library.
 
 ## Boolean search
 
-To run a boolean search (for example on CACM), run the file `test_index_bsearch_cacm.py`
+To run a boolean search (for example on CACM), run the file `boolean_search_cacm.py`
 
 Your query must then comply with a few rules:
 - You may use any boolean operator among AND, OR, NOT

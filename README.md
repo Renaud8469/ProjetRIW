@@ -8,7 +8,9 @@ This project uses Python 3.5.2 with the NLTK library.
 
 ## Boolean search
 
-To run a boolean search (for example on CACM), run the file `boolean_search_cacm.py`
+### How to run
+
+To run a boolean search, run the file `boolean_search_cacm.py` or `boolean_search_cs276.py` depending on the collection you want to search.
 
 Your query must then comply with a few rules:
 - You may use any boolean operator among AND, OR, NOT
@@ -28,3 +30,24 @@ harvard AND computer OR program | Ambiguous / makes no logical sense | harvard A
 physics OR (harvard AND (computer) OR program) | Parenthesis are no placed properly | physics OR (harvard AND (computer OR program))
 physics OR (harvard AND (computer OR program) | Missing parenthesis | physics OR (harvard AND (computer OR program))
 (physics OR (harvard AND computer)) | Redundant parenthesis | physics OR (harvard AND computer)
+
+### Principles
+
+Boolean search program means either a document is relevant or it isn't. 
+Only documents matching the boolean query will be returned.
+Documents are not ordered by relevance since they are all deemed equally relevant.
+
+## Vector search
+
+### How to run
+
+To run a vector search, run the `vector_search_cacm.py` or `vector_search_cs276` depending on the collection you want to search.
+
+You query must then comply with a few rules:
+- You should separate your keywords using spaces ` ` or commas `,` 
+- Be careful not to use other kind of punctuation or you may have flawed results
+
+### Principles
+
+Vector search means each document's similarity with the query is calculated.
+Documents are then returned ordered by decreasing similarity (documents closer to the query will be higher in the list).

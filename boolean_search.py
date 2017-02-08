@@ -26,9 +26,9 @@ def individual_results(index, query):
     return preresults
 
 
-def evaluate_single_expression(preresults, single_expr, index):
+def evaluate_single_expression(preresults, single_expr, docs):
     """Returns the results of the most elementary block, i.e. a single expression"""
-    all_docs = docs_in_index(index)
+    all_docs = docs
     for item in single_expr:
         if item in ["AND", "OR", "NOT"]:
             if single_expr.index(item) > 0:
@@ -60,7 +60,7 @@ def evaluate_single_expression(preresults, single_expr, index):
     return results
 
 
-def evaluate_multiple_expressions(preresults, expr, index):
+def evaluate_multiple_expressions(preresults, expr, docs):
     """Returns the results for an expression with more than two terms using the previous function"""
     if len(expr) == 1:
         temporary_results = preresults[expr[0]]
@@ -77,7 +77,7 @@ def evaluate_multiple_expressions(preresults, expr, index):
                 break
 
         # We evaluate the single expression and get temporary results
-        temporary_results = evaluate_single_expression(preresults, l, index)
+        temporary_results = evaluate_single_expression(preresults, l, docs)
 
         # We now replace the original expression in preresults (which is a dictionary) with a new single key
         # so we can then work on new terms next to original expression
@@ -104,7 +104,7 @@ def evaluate_multiple_expressions(preresults, expr, index):
     return temporary_results
 
 
-def boolean_search(index, query):
+def boolean_search(docs, index, query):
     """Returns the documents relevant to a query according to an index provided in argument"""
     preresults = individual_results(index, query)
 
@@ -113,11 +113,11 @@ def boolean_search(index, query):
     for expr in blocks:
         if "(" not in expr:
             temp = split_query(expr)
-            temporary_results = evaluate_multiple_expressions(preresults, temp, index)
+            temporary_results = evaluate_multiple_expressions(preresults, temp, docs)
             preresults[expr] = temporary_results
         else:
             temp = split_query_with_p(expr)
-            temporary_results = evaluate_multiple_expressions(preresults,temp, index)
+            temporary_results = evaluate_multiple_expressions(preresults,temp, docs)
 
     final_results = list(set(temporary_results))
     return final_results

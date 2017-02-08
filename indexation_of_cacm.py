@@ -30,6 +30,7 @@ def get_vocabulary_dict(file):
 
 def get_reverse_index(vocabulary, file):
     reverse_index = {}
+    all_docs = []
     for key in vocabulary.keys():
         reverse_index[key] = {}
     file.seek(0)
@@ -37,6 +38,7 @@ def get_reverse_index(vocabulary, file):
     for line in file:
         if ".I " in line:
             id_paper = get_id(line)
+            all_docs.append(id_paper)
         if (".I " in line) or (".T" in line) or (".W" in line) or (".B" in line) or (".A" in line) or (
             ".N" in line) or (".X" in line) or (".K" in line):
             latest_mark = line
@@ -48,7 +50,7 @@ def get_reverse_index(vocabulary, file):
                         reverse_index[token][id_paper] += 1
                     else:
                         reverse_index[token][id_paper] = 1
-    return reverse_index
+    return reverse_index, all_docs
 
 
 # -------------

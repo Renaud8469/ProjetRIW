@@ -5,16 +5,17 @@ from math import log, sqrt
 
 class Collection:
 
-    def __init__(self, vocabulary, index):
+    def __init__(self, docs, vocabulary, index):
+        self.docs = docs
         self.vocabulary = vocabulary
         self.index = index
 
     def boolean_search(self, query):
-        return boolean_search(self.index, query)
+        return boolean_search(self.docs, self.index, query)
 
     def vector_search(self, query):
         """Based on first course in RIW, slide 171"""
-        docs = docs_in_index(self.index)
+        docs = self.docs
         s = {}
         results = []
         for doc in docs:

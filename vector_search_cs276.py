@@ -1,10 +1,10 @@
 from collection import Collection
 from indexation_of_cs276 import *
-from first_questions_on_cs276 import count_tokens_and_vocabulary
+from first_questions_on_cs276 import get_vocabulary_cs276
 import time
 
 
-vocabulary = count_tokens_and_vocabulary()
+vocabulary = get_vocabulary_cs276()
 docs, index = make_dictionary("CS276/pa1-data/")
 
 cs276_collection = Collection(list(docs.keys()), vocabulary, index)

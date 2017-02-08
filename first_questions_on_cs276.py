@@ -40,6 +40,16 @@ def count_tokens_and_vocabulary():
     print("Its vocabulary is made of " + str(len(vocabulary)) + " words.")
     return vocabulary
 
+
+def get_vocabulary_cs276():
+    token_dict = {}
+    token_number = 0
+    for i in range(10):
+        result = count_tokens_and_vocabulary_in_dir(i, token_dict, token_number)
+        token_dict = result['voc']
+        token_number = result['count']
+    return token_dict, token_number
+
 """
     From the generated vocabulary, these functions get the word ranking by frequency and print a rank vs frequency plot.
 """

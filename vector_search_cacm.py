@@ -4,7 +4,7 @@ import time
 
 
 cacm = open('CACM/cacm.all', 'r')
-vocabulary = get_vocabulary_dict(cacm)[0]
+vocabulary, number, id_to_doc = get_vocabulary_dict(cacm)
 index, docs = get_reverse_index(vocabulary, cacm)
 
 cacm_collection = Collection(docs, vocabulary, index)
@@ -24,7 +24,7 @@ while 1:
     print(str(len(results)) + " publications correspondantes ont été trouvées: ")
     k = 1
     for i in results:
-        print("\t" + str(k) + "\tPublication n°" + str(i[0]))
+        print("\t" + str(k) + "\tPublication n°" + str(i[0]) + "\t- " + id_to_doc[i[0]])
         k += 1
         if k > 10:
             print("\n\t\tD'autres publications existent mais seuls les dix premiers résultats sont affichés")

@@ -22,3 +22,5 @@ index_time = time.time()
 print("Index établi - Temps de construction : %s seconde(s)" % round(index_time-second_start_time, 4))
 print("\t%s documents ont été indexés" % len(docs))
 print("\t%s termes dans l'index inversé" % len(index))
+
+print(vocabulary[2])

@@ -8,6 +8,7 @@ def get_id(x):
 def get_vocabulary_dict(file):
     token_dict = {}
     token_number = 0
+    id_to_doc = {}
     latest_mark = ""
     for line in file:
         if ".I " in line:
@@ -15,6 +16,11 @@ def get_vocabulary_dict(file):
         if (".I " in line) or (".T" in line) or (".W" in line) or (".B" in line) or (".A" in line) or (".N" in line) or (".X" in line) or (".K" in line):
             latest_mark = line
         if (".T" in latest_mark) or (".W" in latest_mark) or (".K" in latest_mark):
+            if ".T" in latest_mark and line != latest_mark:
+                if id_paper in id_to_doc.keys():
+                    id_to_doc[id_paper] += line[:-1]
+                else:
+                    id_to_doc[id_paper] = line[:-1]
             if len(line) > 3:
                 total_tokens = custom_tokenize(line)
                 current_tokens = lower_and_remove_common(custom_tokenize(line))
@@ -25,7 +31,7 @@ def get_vocabulary_dict(file):
                         token_dict[word] += 1
                     else:
                         token_dict[word] = 1
-    return token_dict, token_number
+    return token_dict, token_number, id_to_doc
 
 
 def get_reverse_index(vocabulary, file):

@@ -45,41 +45,42 @@ def parse_answers(answer_file):
 
 queries = parse_queries(cacm_query)
 answers = parse_answers(cacm_answers)
-p = []
+tot_p = []
+tot_r = []
 
 
-nb_docs = 10
+for nb_docs in range(1, 21):
+    p = []
+    r = []
+    for j in range(1, 64):
+        results = cacm_collection.vector_search(queries[j])
 
-for j in range(1, 64):
-    search_time = time.time()
-    results = cacm_collection.vector_search(queries[j])
-    finish_time = time.time()
+        k = 1
+        p.append(0)
+        r.append(0)
+        for i in results:
+            doc = i[0]
+            k += 1
+            try:
+                if doc in answers[j]:
+                    p[j-1] += 1
+                    r[j-1] += 1/len(answers[j])
+            except KeyError:
+                pass
+            if k > nb_docs:
+                break
 
-    print("Requête : " + queries[j])
-    try:
-        print("Documents pertinents : " + str(answers[j]))
-    except KeyError:
-        print("Aucun document pertinent !")
-    print(str(len(results)) + " publications correspondantes ont été trouvées: ")
-    k = 1
-    p.append(0)
-    for i in results:
-        doc = i[0]
-        print("\t" + str(k) + "\tPublication n°" + str(i[0]))
-        k += 1
-        try:
-            if doc in answers[j]:
-                p[j-1] += 1
-        except KeyError:
-            print("Erreur : pas de document")
-        if k > nb_docs:
-            print("Précision : " + str(p[j-1] / nb_docs))
-            break
-    print("\nRecherche effectuée en %s seconde(s) \n" % round(finish_time - search_time, 4))
-    print("\n-------------------------\n")
+    moy = 0
+    moy_r = 0
+    for i in p:
+        moy += i/(64 * nb_docs)
+    for i in r:
+        moy_r += i/64
 
-print("PRECISION MOYENNE : ")
-moy = 0
-for i in p:
-    moy += i/(64 * nb_docs)
-print(moy)
+    print("Précision moyenne pour %i documents retournés : %s" % (nb_docs, moy))
+    print("Rappel moyen pour %i documents retournés : %s" % (nb_docs, moy_r))
+    tot_p.append(moy)
+    tot_r.append(moy_r)
+
+print(tot_p)
+print(tot_r)

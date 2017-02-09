@@ -1,7 +1,5 @@
 from collection import Collection
 from indexation_of_cacm import *
-from useful_functions import lower_and_remove_common, custom_tokenize
-import time
 
 
 cacm = open('CACM/cacm.all', 'r')
@@ -14,42 +12,16 @@ cacm_query = open('CACM/query.text', 'r')
 cacm_answers = open('CACM/qrels.text', 'r')
 
 
-def parse_queries(query_file):
-    query_dict = {}
-    latest_mark = ""
-    current_query_id = 0
-    for line in query_file:
-        if ".I" in line:
-            current_query_id = get_id(line)
-            query_dict[current_query_id] = ""
-        if (".I " in line) or (".T" in line) or (".W" in line) or (".B" in line) or (".A" in line) or (".N" in line) or (".X" in line) or (".K" in line):
-            latest_mark = line
-        if ".W" in latest_mark and len(line) > 3:
-            current_tokens = lower_and_remove_common(custom_tokenize(line))
-            for token in current_tokens:
-                if len(token) > 1:
-                    query_dict[current_query_id] += token + " "
-    return query_dict
-
-
-def parse_answers(answer_file):
-    answer_dict = {}
-    for line in answer_file:
-        current_id = int(line[0:2])
-        if current_id in answer_dict.keys():
-            answer_dict[current_id].append(int(line[3:7]))
-        else:
-            answer_dict[current_id] = [int(line[3:7])]
-    return answer_dict
-
-
 queries = parse_queries(cacm_query)
 answers = parse_answers(cacm_answers)
 tot_p = []
 tot_r = []
+nb_docs_max = 20
 
+print("Traitement en cours...")
 
-for nb_docs in range(1, 21):
+for nb_docs in range(1, nb_docs_max+1):
+    print(str(nb_docs*100/nb_docs_max) + "%")
     p = []
     r = []
     for j in range(1, 64):
@@ -70,17 +42,29 @@ for nb_docs in range(1, 21):
             if k > nb_docs:
                 break
 
-    moy = 0
+    moy_p = 0
     moy_r = 0
     for i in p:
-        moy += i/(64 * nb_docs)
+        moy_p += i / (64 * nb_docs)
     for i in r:
         moy_r += i/64
 
-    print("Précision moyenne pour %i documents retournés : %s" % (nb_docs, moy))
-    print("Rappel moyen pour %i documents retournés : %s" % (nb_docs, moy_r))
-    tot_p.append(moy)
-    tot_r.append(moy_r)
+    tot_p.append(round(moy_p, 4))
+    tot_r.append(round(moy_r, 4))
 
-print(tot_p)
-print(tot_r)
+print("\nPrécision maximale : " + str(max(tot_p)) + " pour " + str(tot_p.index(max(tot_p)) + 1) + " documents")
+print("Rappel maximal : " + str(max(tot_r)) + " pour " + str(tot_r.index(max(tot_r)) + 1) + " documents\n")
+
+print("nb_docs\t* : Précision | ~ : Rappel")
+
+for i in range(nb_docs_max):
+    x = int(tot_p[i]*100)
+    y = int(tot_r[i]*100)
+    p_g = ""
+    r_g = ""
+    for j in range(x):
+        p_g += "*"
+    for k in range(y):
+        r_g += "~"
+    print(str(i+1) + " - \t" + p_g)
+    print(str(i+1) + " - \t" + r_g)

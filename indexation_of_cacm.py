@@ -59,6 +59,35 @@ def get_reverse_index(vocabulary, file):
     return reverse_index, all_docs
 
 
+def parse_queries(query_file):
+    query_dict = {}
+    latest_mark = ""
+    current_query_id = 0
+    for line in query_file:
+        if ".I" in line:
+            current_query_id = get_id(line)
+            query_dict[current_query_id] = ""
+        if (".I " in line) or (".T" in line) or (".W" in line) or (".B" in line) or (".A" in line) or (".N" in line) or (".X" in line) or (".K" in line):
+            latest_mark = line
+        if ".W" in latest_mark and len(line) > 3:
+            current_tokens = lower_and_remove_common(custom_tokenize(line))
+            for token in current_tokens:
+                if len(token) > 1:
+                    query_dict[current_query_id] += token + " "
+    return query_dict
+
+
+def parse_answers(answer_file):
+    answer_dict = {}
+    for line in answer_file:
+        current_id = int(line[0:2])
+        if current_id in answer_dict.keys():
+            answer_dict[current_id].append(int(line[3:7]))
+        else:
+            answer_dict[current_id] = [int(line[3:7])]
+    return answer_dict
+
+
 # -------------
 # Old functions
 # -------------

@@ -195,3 +195,18 @@ def parentheses_blocks(query):
     if blocks[0] != query:
         list_final = list_final + [query]
     return list_final
+
+
+def cheap_graph(nb_docs_max, tot_p, tot_r):
+    print("nb_docs\t* : Précision | ~ : Rappel")
+    for i in range(nb_docs_max):
+        x = int(tot_p[i] * 100)
+        y = int(tot_r[i] * 100)
+        p_g = ""
+        r_g = ""
+        for j in range(x):
+            p_g += "*"
+        for k in range(y):
+            r_g += "~"
+        print(str(i + 1) + " - \t" + p_g)
+        print(str(i + 1) + " - \t" + r_g)

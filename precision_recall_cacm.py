@@ -16,7 +16,7 @@ queries = parse_queries(cacm_query)
 answers = parse_answers(cacm_answers)
 tot_p = []
 tot_r = []
-nb_docs_max = 20
+nb_docs_max = 100
 
 print("Traitement en cours...")
 
@@ -55,16 +55,9 @@ for nb_docs in range(1, nb_docs_max+1):
 print("\nPrécision maximale : " + str(max(tot_p)) + " pour " + str(tot_p.index(max(tot_p)) + 1) + " documents")
 print("Rappel maximal : " + str(max(tot_r)) + " pour " + str(tot_r.index(max(tot_r)) + 1) + " documents\n")
 
-print("nb_docs\t* : Précision | ~ : Rappel")
+cheap_graph(nb_docs_max, tot_p, tot_r)
 
-for i in range(nb_docs_max):
-    x = int(tot_p[i]*100)
-    y = int(tot_r[i]*100)
-    p_g = ""
-    r_g = ""
-    for j in range(x):
-        p_g += "*"
-    for k in range(y):
-        r_g += "~"
-    print(str(i+1) + " - \t" + p_g)
-    print(str(i+1) + " - \t" + r_g)
+plt.plot(tot_r, tot_p)
+plt.xlabel("Recall")
+plt.ylabel("Precision")
+plt.show()

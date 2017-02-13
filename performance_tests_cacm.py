@@ -37,6 +37,8 @@ except FileNotFoundError:
         print("L'index a bien été enregistré dans le fichier static/index_cacm.json (taille %s Mo)" % size)
         static_docs = open('static/docs_cacm.txt', 'w')
         static_docs.write(str(docs))
+        static_voc = open('static/voc_cacm.json', 'w')
+        static_voc.write(json.dumps(vocabulary))
     elif answer == "n":
         print("L'index n'a pas été enregistré.")
     else:

@@ -35,7 +35,9 @@ except FileNotFoundError:
         size = os.stat("static/index_cs276.json").st_size / 1000000
         print("L'index a bien été enregistré dans le fichier static/index_cs276.json (taille %s Mo)" % size)
         static_docs = open('static/docs_cs276.txt', 'w')
-        static_docs.write(str(docs))
+        static_docs.write(str(list(docs.keys())))
+        static_voc = open('static/voc_cs276.json', 'w')
+        static_voc.write(str(json.dumps(vocabulary)))
     elif answer == "n":
         print("L'index n'a pas été enregistré.")
     else:

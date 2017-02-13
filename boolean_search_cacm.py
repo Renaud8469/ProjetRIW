@@ -1,19 +1,19 @@
 from indexation_of_cacm import *
 from collection import Collection
 import time
-import json
+import ast
 
 
 cacm = open('CACM/cacm.all', 'r')
 
 try:
-    index_cacm = open('static/index_cacm.json', 'r')
-    docs_cacm = open('static/docs_cacm.txt', 'r')
-    voc_cacm = open('static/voc_cacm.json', 'r')
+    index_cacm = open('static/index_cacm.txt', 'r').read()
+    docs_cacm = open('static/docs_cacm.txt', 'r').read()
+    voc_cacm = open('static/voc_cacm.txt', 'r').read()
     print("Index détecté dans le dossier static/, chargement des fichiers détectés en cours...")
-    index = json.load(index_cacm)
-    docs = json.load(docs_cacm)
-    vocabulary = json.load(voc_cacm)
+    index = ast.literal_eval(index_cacm)
+    docs = list(docs_cacm)
+    vocabulary = ast.literal_eval(voc_cacm)
     id_to_doc = get_vocabulary_dict(cacm)[2]
     print("Index chargé !\n")
 except FileNotFoundError:
@@ -39,7 +39,6 @@ while 1:
     print(str(len(results)) + " publications correspondantes ont été trouvées : ")
     k = 1
     for i in results:
-        i = int(i)
         print("\t" + str(k) + "\tPublication n°" + str(i) + "\t- " + id_to_doc[i])
         k += 1
 

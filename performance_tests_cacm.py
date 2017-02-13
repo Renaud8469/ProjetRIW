@@ -1,5 +1,4 @@
 import time
-import json
 import os
 from indexation_of_cacm import *
 
@@ -26,19 +25,19 @@ print("\t%s documents ont été indexés" % len(docs))
 print("\t%s termes dans l'index inversé" % len(index))
 
 try:
-    size = os.stat("static/index_cacm.json").st_size / 1000000
+    size = os.stat("static/index_cacm.txt").st_size / 1000000
     print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
 except FileNotFoundError:
     answer = input("\nPas d'index détecté pour CACM dans le dossier static/, souhaitez-vous enregistrer l'index ? [y/n]")
     if answer == "y":
-        static_index = open('static/index_cacm.json', 'w')
-        static_index.write(json.dumps(index))
-        size = os.stat("static/index_cacm.json").st_size / 1000000
-        print("L'index a bien été enregistré dans le fichier static/index_cacm.json (taille %s Mo)" % size)
+        static_index = open('static/index_cacm.txt', 'w')
+        static_index.write(str(index))
+        size = os.stat("static/index_cacm.txt").st_size / 1000000
+        print("L'index a bien été enregistré dans le fichier static/index_cacm.txt (taille %s Mo)" % size)
         static_docs = open('static/docs_cacm.txt', 'w')
         static_docs.write(str(docs))
-        static_voc = open('static/voc_cacm.json', 'w')
-        static_voc.write(json.dumps(vocabulary))
+        static_voc = open('static/voc_cacm.txt', 'w')
+        static_voc.write(str(vocabulary))
     elif answer == "n":
         print("L'index n'a pas été enregistré.")
     else:

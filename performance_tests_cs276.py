@@ -1,4 +1,6 @@
 import time
+import os
+import json
 from first_questions_on_cs276 import get_vocabulary_cs276
 from indexation_of_cs276 import make_dictionary
 
@@ -21,3 +23,18 @@ index_time = time.time()
 print("Index établi - Temps de construction : %s seconde(s)" % round(index_time-second_start_time, 4))
 print("\t%s documents ont été indexés" % len(docs))
 print("\t%s termes dans l'index inversé" % len(index))
+
+try:
+    size = os.stat("static/index_cs276.json").st_size / 1000000
+    print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
+except FileNotFoundError:
+    answer = input("Pas d'index détecté pour CACM dans le dossier static/, souhaitez-vous enregistrer l'index ? [y/n]")
+    if answer == "y":
+        static_index = open('static/index_cs276.json', 'w')
+        static_index.write(json.dumps(index))
+        size = os.stat("static/index_cs276.json").st_size / 1000000
+        print("L'index a bien été enregistré dans le fichier static/index_cs276.json (taille %s Mo)" % size)
+    elif answer == "n":
+        print("L'index n'a pas été enregistré.")
+    else:
+        print("Commande non reconnue, l'index n'a pas été enregistré")

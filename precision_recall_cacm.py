@@ -55,7 +55,7 @@ for nb_docs in range(1, nb_docs_max+1):
 print("\nPrécision maximale : " + str(max(tot_p)) + " pour " + str(tot_p.index(max(tot_p)) + 1) + " documents")
 print("Rappel maximal : " + str(max(tot_r)) + " pour " + str(tot_r.index(max(tot_r)) + 1) + " documents\n")
 
-cheap_graph(nb_docs_max, tot_p, tot_r)
+# cheap_graph(nb_docs_max, tot_p, tot_r)
 
 plt.plot(tot_r, tot_p)
 plt.xlabel("Recall")

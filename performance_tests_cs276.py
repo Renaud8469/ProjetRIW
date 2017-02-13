@@ -28,7 +28,7 @@ try:
     size = os.stat("static/index_cs276.p").st_size / 1000000
     print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
 except FileNotFoundError:
-    answer = input("\nPas d'index détecté pour CS276 dans le dossier static/, souhaitez-vous enregistrer l'index ? [y/n]")
+    answer = input("\nPas d'index détecté pour CS276 dans le dossier static/. Enregistrer l'index permet de relancer plus rapidement les programmes de recherche, souhaitez-vous enregistrer l'index (espace occupé estimé à 65 Mo) ? [y/n]")
     if answer == "y":
         pickle.dump(index, open('static/index_cs276.p', 'wb'))
         size = os.stat("static/index_cs276.p").st_size / 1000000

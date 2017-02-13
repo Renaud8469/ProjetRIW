@@ -1,4 +1,5 @@
 import time
+import os
 from indexation_of_cacm import *
 
 
@@ -17,8 +18,28 @@ print("\n ------------- \n")
 
 second_start_time = time.time()
 print("Indexation des fichiers en cours...")
-docs, index = get_reverse_index(vocabulary[0], cacm)
+index, docs = get_reverse_index(vocabulary[0], cacm)
 index_time = time.time()
 print("Index établi - Temps de construction : %s seconde(s)" % round(index_time-second_start_time, 4))
 print("\t%s documents ont été indexés" % len(docs))
 print("\t%s termes dans l'index inversé" % len(index))
+
+try:
+    size = os.stat("static/index_cacm.txt").st_size / 1000000
+    print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
+except FileNotFoundError:
+    answer = input("\nPas d'index détecté pour CACM dans le dossier static/, souhaitez-vous enregistrer l'index ? [y/n]")
+    if answer == "y":
+        static_index = open('static/index_cacm.txt', 'w')
+        static_index.write(str(index))
+        size = os.stat("static/index_cacm.txt").st_size / 1000000
+        print("L'index a bien été enregistré dans le fichier static/index_cacm.txt (taille %s Mo)" % size)
+        static_docs = open('static/docs_cacm.txt', 'w')
+        for doc in docs:
+            static_docs.write(str(doc)+"\n")
+        static_voc = open('static/voc_cacm.txt', 'w')
+        static_voc.write(str(vocabulary[0]))
+    elif answer == "n":
+        print("L'index n'a pas été enregistré.")
+    else:
+        print("Commande non reconnue, l'index n'a pas été enregistré")

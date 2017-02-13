@@ -1,11 +1,27 @@
 from indexation_of_cacm import *
 from collection import Collection
 import time
+import ast
+from useful_functions import get_docs
 
 
 cacm = open('CACM/cacm.all', 'r')
-vocabulary, number, id_to_doc = get_vocabulary_dict(cacm)
-index, docs = get_reverse_index(vocabulary, cacm)
+
+try:
+    index_cacm = open('static/index_cacm.txt', 'r').read()
+    docs_cacm = open('static/docs_cacm.txt', 'r')
+    voc_cacm = open('static/voc_cacm.txt', 'r').read()
+    print("Index détecté dans le dossier static/, chargement des fichiers détectés en cours...")
+    index = ast.literal_eval(index_cacm)
+    docs = get_docs(docs_cacm)
+    vocabulary = ast.literal_eval(voc_cacm)
+    id_to_doc = get_vocabulary_dict(cacm)[2]
+    print("Index chargé !\n")
+except FileNotFoundError:
+    print("Index non trouvé dans le dossier static/, construction de l'index en cours...")
+    vocabulary, number, id_to_doc = get_vocabulary_dict(cacm)
+    index, docs = get_reverse_index(vocabulary, cacm)
+    print("Index construit !\n")
 
 cacm_collection = Collection(docs, vocabulary, index)
 

@@ -1,5 +1,6 @@
 import time
 import os
+import pickle
 from first_questions_on_cs276 import get_vocabulary_cs276
 from indexation_of_cs276 import make_dictionary
 
@@ -24,20 +25,18 @@ print("\t%s documents ont été indexés" % len(docs))
 print("\t%s termes dans l'index inversé" % len(index))
 
 try:
-    size = os.stat("static/index_cs276.txt").st_size / 1000000
+    size = os.stat("static/index_cs276.p").st_size / 1000000
     print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
 except FileNotFoundError:
-    answer = input("\nPas d'index détecté pour CS276 dans le dossier static/, souhaitez-vous enregistrer l'index ? [y/n]")
+    answer = input("\nPas d'index détecté pour CS276 dans le dossier static/. Enregistrer l'index permet de relancer plus rapidement les programmes de recherche, souhaitez-vous enregistrer l'index (espace occupé estimé à 65 Mo) ? [y/n]")
     if answer == "y":
-        static_index = open('static/index_cs276.txt', 'w')
-        static_index.write(str(index))
-        size = os.stat("static/index_cs276.txt").st_size / 1000000
-        print("L'index a bien été enregistré dans le fichier static/index_cs276.txt (taille %s Mo)" % size)
+        pickle.dump(index, open('static/index_cs276.p', 'wb'))
+        size = os.stat("static/index_cs276.p").st_size / 1000000
+        print("L'index a bien été enregistré dans le fichier static/index_cs276.p (taille %s Mo)" % size)
         static_docs = open('static/docs_cs276.txt', 'w')
         for doc in list(docs.keys()):
             static_docs.write(str(doc)+"\n")
-        static_voc = open('static/voc_cs276.txt', 'w')
-        static_voc.write(str(vocabulary))
+        pickle.dump(vocabulary[0], open('static/voc_cs276.p', 'wb'))
     elif answer == "n":
         print("L'index n'a pas été enregistré.")
     else:

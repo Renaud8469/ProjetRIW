@@ -1,6 +1,5 @@
 import time
 import os
-import json
 from first_questions_on_cs276 import get_vocabulary_cs276
 from indexation_of_cs276 import make_dictionary
 
@@ -25,19 +24,20 @@ print("\t%s documents ont été indexés" % len(docs))
 print("\t%s termes dans l'index inversé" % len(index))
 
 try:
-    size = os.stat("static/index_cs276.json").st_size / 1000000
+    size = os.stat("static/index_cs276.txt").st_size / 1000000
     print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
 except FileNotFoundError:
     answer = input("\nPas d'index détecté pour CS276 dans le dossier static/, souhaitez-vous enregistrer l'index ? [y/n]")
     if answer == "y":
-        static_index = open('static/index_cs276.json', 'w')
-        static_index.write(json.dumps(index))
-        size = os.stat("static/index_cs276.json").st_size / 1000000
-        print("L'index a bien été enregistré dans le fichier static/index_cs276.json (taille %s Mo)" % size)
+        static_index = open('static/index_cs276.txt', 'w')
+        static_index.write(str(index))
+        size = os.stat("static/index_cs276.txt").st_size / 1000000
+        print("L'index a bien été enregistré dans le fichier static/index_cs276.txt (taille %s Mo)" % size)
         static_docs = open('static/docs_cs276.txt', 'w')
-        static_docs.write(str(list(docs.keys())))
-        static_voc = open('static/voc_cs276.json', 'w')
-        static_voc.write(str(json.dumps(vocabulary)))
+        for doc in list(docs.keys()):
+            static_docs.write(str(doc)+"\n")
+        static_voc = open('static/voc_cs276.txt', 'w')
+        static_voc.write(str(vocabulary))
     elif answer == "n":
         print("L'index n'a pas été enregistré.")
     else:

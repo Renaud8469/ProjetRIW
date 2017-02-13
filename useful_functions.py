@@ -210,3 +210,10 @@ def cheap_graph(nb_docs_max, tot_p, tot_r):
             r_g += "~"
         print(str(i + 1) + " - \t" + p_g)
         print(str(i + 1) + " - \t" + r_g)
+
+
+def get_docs(file):
+    docs = []
+    for line in file:
+        docs.append(int(line))
+    return docs

@@ -35,9 +35,10 @@ except FileNotFoundError:
         size = os.stat("static/index_cacm.txt").st_size / 1000000
         print("L'index a bien été enregistré dans le fichier static/index_cacm.txt (taille %s Mo)" % size)
         static_docs = open('static/docs_cacm.txt', 'w')
-        static_docs.write(str(docs))
+        for doc in docs:
+            static_docs.write(str(doc)+"\n")
         static_voc = open('static/voc_cacm.txt', 'w')
-        static_voc.write(str(vocabulary))
+        static_voc.write(str(vocabulary[0]))
     elif answer == "n":
         print("L'index n'a pas été enregistré.")
     else:

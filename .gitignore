@@ -8,3 +8,4 @@ __pycache__/
 # Data files #
 CS276/pa1-data/
 static/*.txt
+static/*.p

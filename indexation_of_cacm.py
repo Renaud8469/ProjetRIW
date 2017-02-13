@@ -17,11 +17,14 @@ def get_vocabulary_dict(file):
         if (".I " in line) or (".T" in line) or (".W" in line) or (".B" in line) or (".A" in line) or (".N" in line) or (".X" in line) or (".K" in line):
             latest_mark = line
         if (".T" in latest_mark) or (".W" in latest_mark) or (".K" in latest_mark) or (".A" in latest_mark):
-            if ".T" in latest_mark and line != latest_mark:
-                if id_paper in id_to_doc.keys():
-                    id_to_doc[id_paper] += line[:-1]
+            if ".T" in latest_mark:
+                if line == latest_mark:
+                    id_to_doc[id_paper] = ""
                 else:
-                    id_to_doc[id_paper] = line[:-1]
+                    if id_paper in id_to_doc.keys():
+                        id_to_doc[id_paper] += line[:-1]
+                    else:
+                        id_to_doc[id_paper] = line[:-1]
             if len(line) > 3:
                 total_tokens = custom_tokenize(line)
                 current_tokens = lower_and_remove_common(custom_tokenize(line))

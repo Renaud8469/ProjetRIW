@@ -2,19 +2,17 @@ from collection import Collection
 from useful_functions import get_docs
 from indexation_of_cacm import *
 import time
-import ast
+import pickle
 
 
 cacm = open('CACM/cacm.all', 'r')
 
 try:
-    index_cacm = open('static/index_cacm.txt', 'r').read()
     docs_cacm = open('static/docs_cacm.txt', 'r')
-    voc_cacm = open('static/voc_cacm.txt', 'r').read()
     print("Index détecté dans le dossier static/, chargement des fichiers détectés en cours...")
-    index = ast.literal_eval(index_cacm)
+    index = pickle.load(open('static/index_cacm.p', 'rb'))
     docs = get_docs(docs_cacm)
-    vocabulary = ast.literal_eval(voc_cacm)
+    vocabulary = pickle.load(open('static/voc_cacm.p', 'rb'))
     id_to_doc = get_vocabulary_dict(cacm)[2]
     print("Index chargé !\n")
 except FileNotFoundError:

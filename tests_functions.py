@@ -1,4 +1,4 @@
-from useful_functions import *
+from indexation_of_cacm import parse_answers, parse_queries
 from boolean_search import *
 
 print("-------------------")

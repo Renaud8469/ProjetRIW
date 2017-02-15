@@ -36,7 +36,9 @@ answers = parse_answers(cacm_answers)
 
 print("Dictionnaire des requêtes par ID :")
 print(queries)
+print("%i requêtes parsées" % len(queries))
 print("Dictionnaire des documents pertinents par ID des requêtes :")
 print(answers)
+print("%i requêtes avec réponses parsées" % len(answers))
 
 print("-------------------\n")

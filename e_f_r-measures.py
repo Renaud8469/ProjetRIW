@@ -71,8 +71,9 @@ for i in range(nb_docs_max):
     except ZeroDivisionError:
         pass
 
-plt.plot(e_measure)
-plt.plot(f_measure)
-plt.show()
+"""Decomment to plot graph of E-measure or F-measure"""
+# plt.plot(e_measure)
+# plt.plot(f_measure)
+# plt.show()
 
 # print(r_measure)

@@ -100,8 +100,8 @@ def main():
 
     voc_freq_rank_cs76 = get_voc_freq_rank(vocabulary_cs76)
 
-    # show_plot_freq_rank(voc_freq_rank_cs76)
-    # show_plot_log_freq_rank(voc_freq_rank_cs76)
+    show_plot_freq_rank(voc_freq_rank_cs76)
+    show_plot_log_freq_rank(voc_freq_rank_cs76)
 
 
 if __name__ == '__main__':

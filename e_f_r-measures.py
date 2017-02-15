@@ -16,12 +16,13 @@ queries = parse_queries(cacm_query)
 answers = parse_answers(cacm_answers)
 tot_p = []
 tot_r = []
-nb_docs_max = 100
+nb_docs_max = 20
 e_measure = []
 f_measure = []
 alpha = 1/2
 beta = 1
 r_measure = [None]*(nb_docs_max+1)
+mean_ap = [None]*(nb_docs_max+1)
 
 print("Traitement en cours...")
 
@@ -30,6 +31,7 @@ for nb_docs in range(1, nb_docs_max+1):
     p = []
     r = []
     r_measure[nb_docs] = []
+    mean_ap[nb_docs] = []
     for j in range(1, 64):
         r_measure_last = 1
         results = cacm_collection.vector_search(queries[j])
@@ -50,6 +52,7 @@ for nb_docs in range(1, nb_docs_max+1):
             if k >= nb_docs:
                 break
 
+        mean_ap[nb_docs].append(p[j-1]/nb_docs)
         r_measure[nb_docs].append(p[j-1] / r_measure_last)
 
     moy_p = 0
@@ -77,3 +80,16 @@ for i in range(nb_docs_max):
 # plt.show()
 
 # print(r_measure)
+
+mean = []
+for i in range(1, len(mean_ap[1])):
+    """Average precision for all queries"""
+    current_mean = 0
+    for j in range(1, len(mean_ap)):
+        """Average precision for each query"""
+        current_mean += mean_ap[j][i]
+    mean.append(current_mean/len(mean_ap))
+
+mean_average_precision = sum(mean)/float(len(mean))
+
+print("Pour %i documents maximum retournés, on a un Mean Average Precision de %s" % (nb_docs_max, mean_average_precision))

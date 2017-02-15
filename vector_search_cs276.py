@@ -24,7 +24,7 @@ id_to_doc = make_doc_id_to_doc("CS276/pa1-data/")[0]
 cs276_collection = Collection(docs, vocabulary, index)
 
 while 1:
-    query = input("Entrez votre requête en utilisant les mots-clés séparés par une virgule : ")
+    query = input("Entrez votre requête en utilisant les mots-clés souhaités : ")
     if query == "":
         print("Aucune requête n'a été faite, processus abandonné")
         break

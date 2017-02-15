@@ -1,4 +1,4 @@
-from useful_functions import docs_in_index
+from useful_functions import *
 from boolean_search import boolean_search
 from math import log, sqrt
 
@@ -21,7 +21,7 @@ class Collection:
         for doc in docs:
             s[doc] = 0
         n_d = s
-        query = query.replace(",", "").split()
+        query = lower_and_remove_common(custom_tokenize(query))
         n_q = 0
         for word in query:
             w_q = self.get_idf(word)**2

@@ -1,10 +1,21 @@
 # Projet RIW
 
-This repository hosts a student project about information research.
+This repository hosts a student project about information retrieval.
 
 ## Language and packages used
 
 This project uses Python 3.5.2 with the NLTK library.
+
+## How to use
+
+You need to have Python 3 with NLTK installed. To use the project on CS276, please fill `CS276/` directory by unzipping CS276 archive in it.
+CS276 files have not been included on the Github repository because of their size.
+
+First, it is strongly recommended to build indexes and vocabulary files in the `static/` directory by running `performance_tests_<collection>.py` and following instructions.
+This will allow quicker start when using search models (especially when working on CS276).
+If not found, the program will rebuild the required index and store it in memory.
+
+You may now start using boolean and vector search models (see below).
 
 ## Boolean search
 

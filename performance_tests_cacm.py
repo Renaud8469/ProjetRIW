@@ -27,6 +27,8 @@ print("\t%s termes dans l'index inversé" % len(index))
 
 try:
     size = os.stat("static/index_cacm.p").st_size / 1000000
+    size_voc = os.stat("static/voc_cacm.p").st_size
+    size_docs = os.stat("static/docs_cacm.txt").st_size
     print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
 except FileNotFoundError:
     answer = input("\nPas d'index détecté pour CACM dans le dossier static/. Enregistrer l'index permet de relancer plus rapidement les programmes de recherche, souhaitez-vous enregistrer l'index (espace occupé estimé à 1 Mo) ? [y/n]")

@@ -26,6 +26,8 @@ print("\t%s termes dans l'index inversé" % len(index))
 
 try:
     size = os.stat("static/index_cs276.p").st_size / 1000000
+    size_voc = os.stat("static/voc_cs276.p").st_size
+    size_docs = os.stat("static/docs_cs276.txt").st_size
     print("\nIndex détecté dans le dossier static (taille %s Mo), l'index actuel n'a pas été conservé" % size)
 except FileNotFoundError:
     answer = input("\nPas d'index détecté pour CS276 dans le dossier static/. Enregistrer l'index permet de relancer plus rapidement les programmes de recherche, souhaitez-vous enregistrer l'index (espace occupé estimé à 65 Mo) ? [y/n]")

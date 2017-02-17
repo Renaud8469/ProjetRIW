@@ -71,15 +71,18 @@ for i in range(nb_docs_max):
     except ZeroDivisionError:
         pass
 
-"""Decomment to plot graph of E-measure or F-measure"""
+"""Uncomment to plot graph of E-measure or F-measure"""
 # plt.plot(e_measure)
 # plt.plot(f_measure)
 # plt.show()
+
+print("La F-measure est maximale pour %i documents retournés" % f_measure.index(max(f_measure)))
 
 r_measure_mean = []
 for l in r_measure:
     if type(l) == list:
         r_measure_mean.append(sum(l)/float(len(l)))
 
-plt.plot(r_measure_mean)
-plt.show()
+"""Uncomment to plot graph of R-Precision"""
+# plt.plot(r_measure_mean)
+# plt.show()

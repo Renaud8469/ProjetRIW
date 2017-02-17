@@ -24,7 +24,7 @@ for nb_docs in range(1, nb_docs_max+1):
     print(str(nb_docs*100/nb_docs_max) + "%")
     p = []
     r = []
-    for j in range(1, 64):
+    for j in range(1, 65):
         results = cacm_collection.vector_search(queries[j])
 
         k = 1

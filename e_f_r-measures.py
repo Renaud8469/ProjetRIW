@@ -30,8 +30,7 @@ for nb_docs in range(1, nb_docs_max+1):
     p = []
     r = []
     r_measure[nb_docs] = []
-    mean_ap[nb_docs] = []
-    for j in range(1, 64):
+    for j in range(1, 65):
         r_measure_last = 1
         results = cacm_collection.vector_search(queries[j])
 
@@ -77,4 +76,10 @@ for i in range(nb_docs_max):
 # plt.plot(f_measure)
 # plt.show()
 
-# print(r_measure)
+r_measure_mean = []
+for l in r_measure:
+    if type(l) == list:
+        r_measure_mean.append(sum(l)/float(len(l)))
+
+plt.plot(r_measure_mean)
+plt.show()
